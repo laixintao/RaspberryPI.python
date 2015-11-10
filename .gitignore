@@ -1,0 +1,4 @@
+alarm/.idea/*
+*.pyc
+
+alarm/config.py
