@@ -5,6 +5,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+from shoot import shoot
 
 msg = MIMEMultipart()
 
@@ -31,3 +32,17 @@ def send_email(subject,
     server.sendmail(sender,receiver,msg.as_string())
     server.quit()
     print 'successfully send email.'
+
+if __name__ == "__main__":
+    print "test email...",
+    send_email("Email send test",
+               "this is a example...")
+    print "ok"
+    print "test send photo...",
+    try:
+        filename = shoot()
+        send_email("Photo","Picture From RaspberryPI.",filename)
+    except Exception,e:
+        print e
+    print "ok"
+

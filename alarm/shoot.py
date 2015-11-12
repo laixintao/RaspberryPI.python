@@ -16,3 +16,6 @@ def shoot(quality=100,width=1000,height=1000):
     print "picture ok..."
     abs_path = '/tmp/'+str(pic_name)
     return abs_path
+
+if __name__=="__main__":
+    shoot()
