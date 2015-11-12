@@ -7,14 +7,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from shoot import shoot
 
-msg = MIMEMultipart()
-
-msg['to'] = ','.join(receiver)
-msg['from'] = sender
-
 def send_email(subject,
                msghtml,
                *att):
+    msg = MIMEMultipart()
+
+    msg['to'] = ','.join(receiver)
+    msg['from'] = sender
     server = smtplib.SMTP()
     server.connect(smtp)
     server.login(username,password)
@@ -32,6 +31,7 @@ def send_email(subject,
     server.sendmail(sender,receiver,msg.as_string())
     server.quit()
     print 'successfully send email.'
+    att = None
 
 if __name__ == "__main__":
     print "test email...",
