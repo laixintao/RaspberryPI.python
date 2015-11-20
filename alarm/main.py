@@ -8,9 +8,9 @@ import time
 
 class thread_ring(threading.Thread):
     def run(self):
-        print "start ring..."
+        # print "start ring..."
         ring()
-        print "ring over..."
+        # print "ring over..."
 
 class thread_shoot(threading.Thread):
     def run(self):
@@ -25,9 +25,9 @@ def alert():
     while True:
         if get_status()==0 :
             tr = thread_ring()
-            ts = thread_shoot()
+            # ts = thread_shoot()
             tr.start()
-            ts.start()
+            # ts.start()
 
 if __name__ == "__main__":
     alert()
