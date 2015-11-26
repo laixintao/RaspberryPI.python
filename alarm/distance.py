@@ -1,33 +1,34 @@
-# -*- coding: utf-8 -*-
-import RPi.GPIO
+#!/usr/bin/python2
+#coding=utf-8
+import RPi.GPIO as GPIO
 import time
 
-RPi.GPIO.setmode(RPi.GPIO.BCM)
+def init():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(32, GPIO.IN)
+    GPIO.setup(22, GPIO.OUT, initial=GPIO.LOW)
 
-TRIG = 20
-ECHO = 17
+def getdistance():
+    GPIO.output(22, GPIO.HIGH)
+    # 等待10us以上
+    i = 0
+    i += 1
+    GPIO.output(22, GPIO.LOW)
+    while GPIO.input(32) == GPIO.LOW:
+        pass
+    # 从高电平开始计时
+    start = time.time()
+    while GPIO.input(32):
+        pass
+    end = time.time()
+    print 'time:', end-start
+    return (end - start) * 340 / 2
 
-RPi.GPIO.setup(TRIG, RPi.GPIO.OUT)
-RPi.GPIO.setup(ECHO, RPi.GPIO.IN)
-
-try:
-    while True:
-        RPi.GPIO.output(TRIG, 0)
-        time.sleep(0.01)
-
-        RPi.GPIO.output(TRIG, 1)
-        time.sleep(0.01)
-        RPi.GPIO.output(TRIG, 0)
-        start = time.time()
-        stop = time.time()
-
-        while RPi.GPIO.input(ECHO) == 0:
-            start = time.time()
-
-        while RPi.GPIO.input(ECHO) == 1:
-            stop = time.time()
-
-        distance = (stop - start - 0.01) * 34000 / 2 #声波的速度是340m/s
-        print distance
-except KeyboardInterrupt:
-    RPi.GPIO.cleanup()
+if __name__ == "__main__":
+    try:
+        init()
+        print getdistance()
+    except KeyboardInterrupt, e:
+        pass
+    finally:
+        GPIO.cleanup()

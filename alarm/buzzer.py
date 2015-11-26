@@ -54,4 +54,6 @@ def buzzer_end():
 
 def alarm():
     ring()
-    buzzer_end()
+
+if __name__ == "__main__":
+    alarm()
