@@ -32,13 +32,13 @@ __author__ = 'laixintao'
 import RPi.GPIO
 import time
 
-DO = 18
+from config import VBTSENSOR_IN
 
 RPi.GPIO.setmode(RPi.GPIO.BCM)
-RPi.GPIO.setup(DO,RPi.GPIO.IN)
+RPi.GPIO.setup(VBTSENSOR_IN,RPi.GPIO.IN)
 
 def get_status():
-    return RPi.GPIO.input(DO)
+    return RPi.GPIO.input(VBTSENSOR_IN)
 
 if __name__ == "__main__":
     while True:

@@ -2,3 +2,9 @@ alarm/.idea/*
 *.pyc
 
 alarm/config.py
+
+.idea/.name
+
+*.xml
+
+*.iml
