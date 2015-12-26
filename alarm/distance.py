@@ -1,33 +1,17 @@
-# -*- coding: utf-8 -*-
-import RPi.GPIO
-import time
+#!/usr/bin/python2
+#coding=utf-8
+import RPi.GPIO as GPIO
+from config import DISTANCE_IN
 
-RPi.GPIO.setmode(RPi.GPIO.BCM)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(DISTANCE_IN,GPIO.IN)
 
-TRIG = 20
-ECHO = 17
+def people_near():
+    return GPIO.input(DISTANCE_IN)
 
-RPi.GPIO.setup(TRIG, RPi.GPIO.OUT)
-RPi.GPIO.setup(ECHO, RPi.GPIO.IN)
-
-try:
+if __name__ == "__main__":
     while True:
-        RPi.GPIO.output(TRIG, 0)
-        time.sleep(0.01)
-
-        RPi.GPIO.output(TRIG, 1)
-        time.sleep(0.01)
-        RPi.GPIO.output(TRIG, 0)
-        start = time.time()
-        stop = time.time()
-
-        while RPi.GPIO.input(ECHO) == 0:
-            start = time.time()
-
-        while RPi.GPIO.input(ECHO) == 1:
-            stop = time.time()
-
-        distance = (stop - start - 0.01) * 34000 / 2 #声波的速度是340m/s
-        print distance
-except KeyboardInterrupt:
-    RPi.GPIO.cleanup()
+        if people_near()==True:
+            print "T"
+        else:
+            print "F"

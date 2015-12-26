@@ -31,25 +31,24 @@ __author__ = 'laixintao'
 
 import RPi.GPIO
 import time
-
-IO = 23
+from config import BUZZER_OUT
 
 RPi.GPIO.setmode(RPi.GPIO.BCM)
-RPi.GPIO.setup(IO,RPi.GPIO.OUT)
+RPi.GPIO.setup(BUZZER_OUT,RPi.GPIO.OUT)
 
 def ring():
-    RPi.GPIO.output(IO,RPi.GPIO.LOW)
+    RPi.GPIO.output(BUZZER_OUT,RPi.GPIO.LOW)
     time.sleep(3)
-    RPi.GPIO.output(IO,RPi.GPIO.HIGH)
+    RPi.GPIO.output(BUZZER_OUT,RPi.GPIO.HIGH)
+
+def buzzer_start():
+    RPi.GPIO.output(BUZZER_OUT,RPi.GPIO.LOW)
+
+def buzzer_end():
+    RPi.GPIO.output(BUZZER_OUT,RPi.GPIO.HIGH)
 
 def alarm():
-    for _ in range(2):
-        RPi.GPIO.output(IO,RPi.GPIO.LOW)
-        time.sleep(1)
-        RPi.GPIO.output(IO,RPi.GPIO.HIGH)
-        RPi.GPIO.output(IO,RPi.GPIO.LOW)
-        time.sleep(1)
-        RPi.GPIO.output(IO,RPi.GPIO.HIGH)
-        RPi.GPIO.output(IO,RPi.GPIO.LOW)
-        time.sleep(2)
-        RPi.GPIO.output(IO,RPi.GPIO.HIGH)
+    ring()
+
+if __name__ == "__main__":
+    alarm()

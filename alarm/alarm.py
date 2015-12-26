@@ -30,14 +30,8 @@ __author__ = 'laixintao'
  # +-----+-----+---------+------+---+---Pi 2---+---+------+---------+-----+-----+
 
 import RPi.GPIO
-import time
-
-IO = 23
-DO = 18
 
 RPi.GPIO.setmode(RPi.GPIO.BCM)
-RPi.GPIO.setup(DO,RPi.GPIO.IN)
-RPi.GPIO.setup(IO,RPi.GPIO.OUT)
 
 def ring():
     RPi.GPIO.output(IO,RPi.GPIO.LOW)
