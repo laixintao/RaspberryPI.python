@@ -3,11 +3,48 @@ from send import send_email
 from shoot import shoot
 from buzzer import ring,alarm
 from vbtsensor import get_status
+import threading
+from distance import no_people_near
+from CMD import screen_on,screen_off
+import time
 
-def alert():
-    while True:
-        if get_status()==0 :
-            ring()
+class Open(threading.Thread):
+    def run(self):
+        while True:
+            people = no_people_near()
+            if not people:
+                print "screen on"
+                screen_on()
+
+class Close(threading.Thread):
+    def run(self):
+        _time = 0
+        while True:
+            print _time
+            if not no_people_near():
+                _time=0
+            else:
+                _time+=1
+            if _time >= 3:
+                _time=0
+                screen_off()
+                print "screen off"
+            time.sleep(1)
+
+
+
+class Alart(threading.Thread):
+    def run(self):
+        while True:
+            if get_status()==0 :
+                ring()
 
 if __name__ == "__main__":
-    alert()
+    # print "alart..."
+    # thread.start_new_thread(alert,())
+    # print "open..."
+    # thread.start_new_thread(open,())
+    # thread.start_new_thread(close,())
+    Open().start()
+    Close().start()
+    Alart().start()
