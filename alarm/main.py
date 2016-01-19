@@ -4,7 +4,7 @@ from shoot import shoot
 from buzzer import ring,alarm
 from vbtsensor import get_status
 import threading
-from distance import no_people_near
+from wave import no_people_near
 from CMD import screen_on,screen_off
 import time
 
@@ -29,8 +29,23 @@ class Close(threading.Thread):
                 _time=0
                 screen_off()
                 print "screen off"
-            time.sleep(1)
+                # time.sleep(0.1)
 
+class Screen(threading.Thread):
+    def run(self):
+        _time = 0
+        while True:
+            print _time
+            if not no_people_near():
+                _time=0
+                screen_on()
+            else:
+                _time+=1
+            if _time >= 3:
+                _time=0
+                screen_off()
+                print "screen off"
+                # time.sleep(0.1)
 
 
 class Alart(threading.Thread):
@@ -45,6 +60,21 @@ if __name__ == "__main__":
     # print "open..."
     # thread.start_new_thread(open,())
     # thread.start_new_thread(close,())
-    Open().start()
-    Close().start()
-    Alart().start()
+    # Open().start()
+
+
+    # Screen().start()
+    # Alart().start()
+    _time = 0
+    while True:
+        print _time
+        if not no_people_near():
+            _time=0
+            screen_on()
+        else:
+            _time+=1
+        if _time >= 700:
+            _time=0
+            screen_off()
+            print "screen off"
+            # time.sleep(0.1)
