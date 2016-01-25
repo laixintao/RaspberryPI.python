@@ -32,6 +32,7 @@ __author__ = 'laixintao'
 import RPi.GPIO
 import time
 from config import BUZZER_OUT
+from vbtsensor import get_status
 
 RPi.GPIO.setmode(RPi.GPIO.BCM)
 RPi.GPIO.setup(BUZZER_OUT,RPi.GPIO.OUT)
@@ -51,4 +52,6 @@ def alarm():
     ring()
 
 if __name__ == "__main__":
-    alarm()
+    while True:
+        if get_status()==0 :
+            ring()

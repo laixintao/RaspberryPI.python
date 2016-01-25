@@ -73,7 +73,7 @@ if __name__ == "__main__":
             screen_on()
         else:
             _time+=1
-        if _time >= 700:
+        if _time >= 90:
             _time=0
             screen_off()
             print "screen off"
